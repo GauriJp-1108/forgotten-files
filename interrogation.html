@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Interrogation | The Glass House</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =====================================================
+           INTERROGATION PAGE
+           Same dark visual style as Evidence
+        ===================================================== */
+
+        body.interrogation-page {
+            background: #111116;
+            color: #eeeeee;
+            margin: 0;
+        }
+
+        .interrogation-container {
+            width: 100%;
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 55px 35px 90px;
+            box-sizing: border-box;
+        }
+
+        .interrogation-heading {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .interrogation-heading .eyebrow {
+            color: #9999a8;
+            font-family: "Inter", sans-serif;
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .interrogation-heading h1 {
+            margin: 0;
+            color: #ffffff;
+            font-family: "Cormorant Garamond", serif;
+            font-size: 52px;
+            font-weight: 600;
+        }
+
+        .interrogation-heading p {
+            max-width: 650px;
+            margin: 12px auto 0;
+            color: #9999a8;
+            font-family: "Inter", sans-serif;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* =====================================================
+           SUSPECT SELECTION
+        ===================================================== */
+
+        #suspectSelection {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+        }
+
+        .interrogation-suspect {
+            min-height: 160px;
+            padding: 22px 15px;
+
+            background: #1b1b21;
+            border: 1px solid #30303a;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .interrogation-suspect:hover {
+            transform: translateY(-3px);
+            border-color: #777783;
+            background: #222229;
+        }
+
+        .suspect-icon {
+            width: 58px;
+            height: 58px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 14px;
+
+            border: 1px solid #454550;
+            border-radius: 50%;
+
+            background: #25252d;
+
+            font-size: 25px;
+        }
+
+        .interrogation-suspect h2 {
+            margin: 0 0 4px;
+
+            color: #ffffff;
+
+            font-family: "Cormorant Garamond", serif;
+            font-size: 23px;
+            font-weight: 600;
+        }
+
+        .interrogation-suspect span {
+            color: #8e8e9a;
+
+            font-family: "Inter", sans-serif;
+            font-size: 11px;
+        }
+
+        /* =====================================================
+           CHAT SECTION
+        ===================================================== */
+
+        #interrogationChat {
+            display: none;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .chat-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 20px;
+        }
+
+        .back-to-suspects {
+            padding: 10px 16px;
+
+            background: transparent;
+            border: 1px solid #3c3c46;
+
+            color: #aaaab5;
+
+            font-family: "Inter", sans-serif;
+            font-size: 11px;
+
+            cursor: pointer;
+        }
+
+        .back-to-suspects:hover {
+            background: #222229;
+            color: #ffffff;
+        }
+
+        .chat-person {
+            color: #777783;
+
+            font-family: "Inter", sans-serif;
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Chat window */
+
+        .chat-window {
+            background: #18181e;
+            border: 1px solid #30303a;
+        }
+
+        .chat-header {
+            padding: 20px 25px;
+
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            background: #202027;
+            border-bottom: 1px solid #34343d;
+        }
+
+        .chat-avatar {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid #484853;
+            border-radius: 50%;
+
+            background: #292930;
+
+            font-size: 22px;
+        }
+
+        .chat-header h2 {
+            margin: 0;
+
+            color: #ffffff;
+
+            font-family: "Cormorant Garamond", serif;
+            font-size: 28px;
+        }
+
+        .chat-header p {
+            margin: 3px 0 0;
+
+            color: #858591;
+
+            font-family: "Inter", sans-serif;
+            font-size: 11px;
+        }
+
+        /* Messages */
+
+        .chat-messages {
+            min-height: 380px;
+            max-height: 500px;
+
+            padding: 25px;
+
+            overflow-y: auto;
+
+            background: #141419;
+        }
+
+        .message {
+            display: flex;
+            flex-direction: column;
+
+            margin-bottom: 20px;
+        }
+
+        .message.detective {
+            align-items: flex-end;
+        }
+
+        .message.suspect {
+            align-items: flex-start;
+        }
+
+        .message-name {
+            margin-bottom: 5px;
+
+            color: #777783;
+
+            font-family: "Inter", sans-serif;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+
+            padding: 12px 16px;
+
+            border: 1px solid #383842;
+
+            font-family: "Inter", sans-serif;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .message.detective .message-bubble {
+            background: #292932;
+            color: #ffffff;
+        }
+
+        .message.suspect .message-bubble {
+            background: #202027;
+            color: #cfcfd5;
+        }
+
+        /* =====================================================
+           QUESTION BUTTONS
+        ===================================================== */
+
+        .question-area {
+            padding: 25px;
+
+            background: #1b1b21;
+            border-top: 1px solid #34343d;
+        }
+
+        .question-area-title {
+            margin-bottom: 15px;
+
+            color: #858591;
+
+            font-family: "Inter", sans-serif;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .question-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .question-button {
+            width: 100%;
+
+            padding: 13px 16px;
+
+            background: #222229;
+            border: 1px solid #3b3b46;
+
+            color: #d8d8df;
+
+            font-family: "Inter", sans-serif;
+            font-size: 12px;
+
+            text-align: left;
+
+            cursor: pointer;
+
+            transition: all 0.2s ease;
+        }
+
+        .question-button:hover:not(:disabled) {
+            background: #2b2b34;
+            border-color: #686874;
+            color: #ffffff;
+        }
+
+        .question-button:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        /* =====================================================
+           COMPLETED MESSAGE
+        ===================================================== */
+
+        .interrogation-complete {
+            display: none;
+
+            padding: 20px;
+
+            border-top: 1px solid #34343d;
+
+            background: #1b1b21;
+
+            color: #9999a8;
+
+            font-family: "Inter", sans-serif;
+            font-size: 12px;
+
+            text-align: center;
+        }
+
+        .interrogation-complete strong {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color: #ffffff;
+        }
+
+        /* =====================================================
+           BOTTOM NAVIGATION
+        ===================================================== */
+
+        .interrogation-navigation {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            gap: 20px;
+
+            max-width: 850px;
+
+            margin: 45px auto 0;
+        }
+
+        .interrogation-nav-card {
+            padding: 20px;
+
+            background: #19191f;
+            border: 1px solid #30303a;
+
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .interrogation-nav-card:hover {
+            background: #222229;
+        }
+
+        .interrogation-nav-card span {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color: #777783;
+
+            font-family: "Inter", sans-serif;
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+
+        .interrogation-nav-card strong {
+            font-family: "Cormorant Garamond", serif;
+            font-size: 22px;
+        }
+
+        .interrogation-nav-card.next {
+            text-align: right;
+        }
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            #suspectSelection {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .interrogation-container {
+                padding: 35px 18px 60px;
+            }
+
+            .interrogation-heading h1 {
+                font-size: 40px;
+            }
+
+            #suspectSelection {
+                grid-template-columns: 1fr;
+            }
+
+            .message-bubble {
+                max-width: 85%;
+            }
+
+            .interrogation-navigation {
+                grid-template-columns: 1fr;
+            }
+
+            .interrogation-nav-card.next {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+
+<body class="interrogation-page">
+
+<header class="glass-header">
+    <div class="glass-title">
+        <span>🏛️</span> The Glass House
+    </div>
+
+    <div class="close-button" onclick="closeCase()">×</div>
+</header>
+
+
+<nav class="case-navigation">
+
+    <a href="case-001.html">
+        📋 Case Dossier <span class="check">✓</span>
+    </a>
+
+    <a href="suspects.html">
+        👥 Suspects <span class="check">✓</span>
+    </a>
+
+    <a href="story.html">
+        📖 The Story <span class="check">✓</span>
+    </a>
+
+    <a href="crime-scene.html">
+        📸 Crime Scene <span class="check">✓</span>
+    </a>
+
+    <a href="statements.html">
+        🗣️ Statements <span class="check">✓</span>
+    </a>
+
+    <a href="evidence.html">
+        🔎 Evidence <span class="check">✓</span>
+    </a>
+
+    <a href="secret-notes.html">
+        📝 Secret Notes <span class="check">✓</span>
+    </a>
+
+    <a href="interrogation.html" class="active">
+        ❓ Interrogation <span class="check">✓</span>
+    </a>
+
+    <a href="solution.html">
+        ⚖️ Solution
+    </a>
+
+</nav>
+
+
+<main class="interrogation-container">
+
+    <section class="interrogation-heading">
+
+        <div class="eyebrow">
+            Case Investigation
+        </div>
+
+        <h1>Interrogation</h1>
+
+        <p>
+            Choose a suspect and question them directly.
+            You have three questions for each person.
+            Their answers may reveal inconsistencies,
+            hidden details or information you have not noticed.
+        </p>
+
+    </section>
+
+
+    <!-- =====================================================
+         SUSPECT SELECTION
+    ====================================================== -->
+
+    <section id="suspectSelection">
+
+        <div class="interrogation-suspect"
+             onclick="openInterrogation('eleanor')">
+
+            <div class="suspect-icon">👩</div>
+
+            <h2>Eleanor Ashford</h2>
+
+            <span>48 · Owner</span>
+
+        </div>
+
+
+        <div class="interrogation-suspect"
+             onclick="openInterrogation('daniel')">
+
+            <div class="suspect-icon">👨</div>
+
+            <h2>Daniel Ashford</h2>
+
+            <span>24 · Son</span>
+
+        </div>
+
+
+        <div class="interrogation-suspect"
+             onclick="openInterrogation('marcus')">
+
+            <div class="suspect-icon">🧔</div>
+
+            <h2>Marcus Reed</h2>
+
+            <span>41 · Family Friend</span>
+
+        </div>
+
+
+        <div class="interrogation-suspect"
+             onclick="openInterrogation('clara')">
+
+            <div class="suspect-icon">👩</div>
+
+            <h2>Clara Wilson</h2>
+
+            <span>39 · Housekeeper</span>
+
+        </div>
+
+
+        <div class="interrogation-suspect"
+             onclick="openInterrogation('thomas')">
+
+            <div class="suspect-icon">👨‍🍳</div>
+
+            <h2>Thomas Blake</h2>
+
+            <span>46 · Private Chef</span>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CHAT
+    ====================================================== -->
+
+    <section id="interrogationChat">
+
+        <div class="chat-top">
+
+            <button
+                class="back-to-suspects"
+                onclick="backToSuspects()">
+
+                ← BACK TO SUSPECTS
+
+            </button>
+
+            <span class="chat-person">
+                PRIVATE INTERROGATION
+            </span>
+
+        </div>
+
+
+        <div class="chat-window">
+
+            <div class="chat-header">
+
+                <div class="chat-avatar" id="chatAvatar">
+                    👤
+                </div>
+
+                <div>
+
+                    <h2 id="chatName">
+                        Suspect
+                    </h2>
+
+                    <p id="chatDescription">
+                        Interview
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="chat-messages"
+                id="chatMessages">
+
+            </div>
+
+
+            <div class="question-area">
+
+                <div class="question-area-title">
+                    Choose a question
+                </div>
+
+                <div
+                    class="question-buttons"
+                    id="questionButtons">
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="interrogation-complete"
+                id="interrogationComplete">
+
+                <strong>
+                    INTERROGATION COMPLETE
+                </strong>
+
+                You have used all three questions for this suspect.
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="interrogation-navigation">
+
+        <a
+            href="secret-notes.html"
+            class="interrogation-nav-card">
+
+            <span>← PREVIOUS</span>
+
+            <strong>Secret Notes</strong>
+
+        </a>
+
+
+        <a
+            href="solution.html"
+            class="interrogation-nav-card next">
+
+            <span>NEXT →</span>
+
+            <strong>Solution</strong>
+
+        </a>
+
+    </div>
+
+</main>
+
+
+<script>
+
+/* =====================================================
+   INTERROGATION DATA
+===================================================== */
+
+const interrogations = {
+
+    eleanor: {
+
+        name: "Eleanor Ashford",
+        description: "48 · Owner of Ashford Manor",
+        avatar: "👩",
+
+        questions: [
+
+            {
+                question: "You said you locked the cabinet before returning to dinner. Are you certain it was properly locked?",
+
+                answer: "Yes. I remember closing it and turning the key. I have used that cabinet for years, so I would notice if something felt wrong."
+            },
+
+            {
+                question: "Did anyone know how the cabinet worked?",
+
+                answer: "The family knows where it is, of course. Daniel grew up here, so he has seen me use it many times."
+            },
+
+            {
+                question: "Did you notice anyone behaving strangely that evening?",
+
+                answer: "Not particularly. Everyone seemed normal. Daniel was quieter than usual, but I assumed he simply wanted to be left alone."
+            }
+
+        ]
+
+    },
+
+
+    daniel: {
+
+        name: "Daniel Ashford",
+        description: "24 · Eleanor's son",
+        avatar: "👨",
+
+        questions: [
+
+            {
+                question: "What time did your phone call actually begin?",
+
+                answer: "Around 8:15, I think. I went upstairs because I needed privacy. I don't remember the exact minute."
+            },
+
+            {
+                question: "Did you know how to open the necklace cabinet?",
+
+                answer: "I have seen Mother use it before, but I never had any reason to open it myself."
+            },
+
+            {
+                question: "Why were you upstairs for so long?",
+
+                answer: "It was a private financial matter. I didn't want to discuss it with anyone downstairs."
+            }
+
+        ]
+
+    },
+
+
+    marcus: {
+
+        name: "Marcus Reed",
+        description: "41 · Family Friend",
+        avatar: "🧔",
+
+        questions: [
+
+            {
+                question: "Why did you go outside around 8:30?",
+
+                answer: "I simply wanted some fresh air. The house was warm and there was a lot of conversation."
+            },
+
+            {
+                question: "Did you go anywhere near the study window?",
+
+                answer: "No. I stayed outside near the garden. I never went up to the study."
+            },
+
+            {
+                question: "Were your shoes muddy when you came back inside?",
+
+                answer: "A little, yes. The garden was wet from the earlier rain. I don't remember stepping anywhere unusual."
+            }
+
+        ]
+
+    },
+
+
+    clara: {
+
+        name: "Clara Wilson",
+        description: "39 · Housekeeper",
+        avatar: "👩",
+
+        questions: [
+
+            {
+                question: "Exactly where were you when you heard the door close?",
+
+                answer: "I was still in the kitchen. I heard it from somewhere along the hallway, but I couldn't see who had closed it."
+            },
+
+            {
+                question: "Do you know how the cabinet in the study is locked?",
+
+                answer: "I know the cabinet is locked with a key. Eleanor has always been very particular about keeping it secure."
+            },
+
+            {
+                question: "Did you see Daniel downstairs between 8:20 and 8:40?",
+
+                answer: "No, I don't think I did. I was mostly focused on the dessert."
+            }
+
+        ]
+
+    },
+
+
+    thomas: {
+
+        name: "Thomas Blake",
+        description: "46 · Private Chef",
+        avatar: "👨‍🍳",
+
+        questions: [
+
+            {
+                question: "Could you leave the kitchen without anyone noticing?",
+
+                answer: "Possibly for a short time, yes. But I had the oven running and dessert still needed attention."
+            },
+
+            {
+                question: "Did you use the kitchen's back door that evening?",
+
+                answer: "No. I didn't use it after I brought the supplies in earlier."
+            },
+
+            {
+                question: "Did you see anyone moving toward the study?",
+
+                answer: "No. I was in the kitchen most of the time, so I couldn't see the hallway clearly."
+            }
+
+        ]
+
+    }
+
+};
+
+
+/* =====================================================
+   CURRENT INTERROGATION
+===================================================== */
+
+let currentSuspect = null;
+
+
+/* =====================================================
+   OPEN SUSPECT
+===================================================== */
+
+function openInterrogation(person) {
+
+    currentSuspect = person;
+
+    const suspect = interrogations[person];
+
+    document.getElementById("suspectSelection").style.display = "none";
+
+    document.getElementById("interrogationChat").style.display = "block";
+
+    document.getElementById("chatName").textContent = suspect.name;
+
+    document.getElementById("chatDescription").textContent =
+        suspect.description;
+
+    document.getElementById("chatAvatar").textContent =
+        suspect.avatar;
+
+
+    const messages =
+        document.getElementById("chatMessages");
+
+    messages.innerHTML = "";
+
+
+    const openingMessage = document.createElement("div");
+
+    openingMessage.className = "message suspect";
+
+    openingMessage.innerHTML = `
+        <div class="message-name">
+            ${suspect.name}
+        </div>
+
+        <div class="message-bubble">
+            I have answered the questions already given to me.
+            If there is something specific you want to know,
+            ask.
+        </div>
+    `;
+
+    messages.appendChild(openingMessage);
+
+
+    createQuestionButtons(suspect.questions);
+
+    document.getElementById("interrogationComplete").style.display =
+        "none";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* =====================================================
+   CREATE QUESTION BUTTONS
+===================================================== */
+
+function createQuestionButtons(questions) {
+
+    const container =
+        document.getElementById("questionButtons");
+
+    container.innerHTML = "";
+
+    questions.forEach(function(item, index) {
+
+        const button =
+            document.createElement("button");
+
+        button.className = "question-button";
+
+        button.textContent = item.question;
+
+        button.onclick = function() {
+
+            sendQuestion(index, item);
+
+        };
+
+        container.appendChild(button);
+
+    });
+}
+
+
+/* =====================================================
+   SEND QUESTION
+===================================================== */
+
+function sendQuestion(index, item) {
+
+    const buttons =
+        document.querySelectorAll(".question-button");
+
+    const button = buttons[index];
+
+    if (!button || button.disabled) {
+        return;
+    }
+
+
+    /* Disable question */
+
+    button.disabled = true;
+
+
+    /* Detective message */
+
+    addMessage(
+        "detective",
+        "YOU",
+        item.question
+    );
+
+
+    /* Small delay before suspect replies */
+
+    setTimeout(function() {
+
+        addMessage(
+            "suspect",
+            interrogations[currentSuspect].name,
+            item.answer
+        );
+
+        checkInterrogationComplete();
+
+    }, 700);
+
+}
+
+
+/* =====================================================
+   ADD MESSAGE
+===================================================== */
+
+function addMessage(type, name, text) {
+
+    const messages =
+        document.getElementById("chatMessages");
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message " + type;
+
+    message.innerHTML = `
+
+        <div class="message-name">
+            ${name}
+        </div>
+
+        <div class="message-bubble">
+            ${text}
+        </div>
+
+    `;
+
+    messages.appendChild(message);
+
+
+    messages.scrollTop =
+        messages.scrollHeight;
+}
+
+
+/* =====================================================
+   CHECK IF ALL QUESTIONS USED
+===================================================== */
+
+function checkInterrogationComplete() {
+
+    const buttons =
+        document.querySelectorAll(".question-button");
+
+    let completed = true;
+
+    buttons.forEach(function(button) {
+
+        if (!button.disabled) {
+            completed = false;
+        }
+
+    });
+
+
+    if (completed) {
+
+        document.getElementById(
+            "interrogationComplete"
+        ).style.display = "block";
+
+    }
+
+}
+
+
+/* =====================================================
+   BACK TO SUSPECTS
+===================================================== */
+
+function backToSuspects() {
+
+    document.getElementById(
+        "interrogationChat"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "suspectSelection"
+    ).style.display = "grid";
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =====================================================
+   CLOSE CASE
+===================================================== */
+
+function closeCase() {
+
+    window.location.href = "cases.html";
+
+}
+
+</script>
+
+</body>
+</html>

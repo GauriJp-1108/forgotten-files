@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Witness Statements | The Missing Necklace</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* =====================================================
+           STATEMENTS PAGE
+        ===================================================== */
+
+        .statements-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 55px 24px 80px;
+        }
+
+        /* =====================================================
+           HEADING
+        ===================================================== */
+
+        .statements-heading {
+            margin-bottom: 35px;
+        }
+
+        .statements-heading h1 {
+            font-family: "Cormorant Garamond", serif;
+            font-size: 42px;
+            margin-bottom: 12px;
+            color: #202033;
+        }
+
+        .statements-heading p {
+            max-width: 760px;
+            color: #626274;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        /* =====================================================
+           ALL STATEMENTS VIEW
+        ===================================================== */
+
+        #allStatementsView {
+            display: block;
+        }
+
+        .statement-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        /* =====================================================
+           COLLAPSED STATEMENT CARD
+        ===================================================== */
+
+        .statement-preview {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+
+            background: #ffffff;
+            border: 1px solid #dfe1ef;
+            border-radius: 18px;
+
+            padding: 25px 28px;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .statement-preview:hover {
+            transform: translateY(-3px);
+            border-color: #c77b98;
+            box-shadow: 0 12px 30px rgba(62, 48, 73, 0.10);
+        }
+
+        /* =====================================================
+           AVATAR
+        ===================================================== */
+
+        .statement-avatar {
+            width: 82px;
+            height: 82px;
+
+            min-width: 82px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #ececff;
+
+            border: 4px solid #c6c9ef;
+
+            font-size: 38px;
+        }
+
+        /* =====================================================
+           PREVIEW INFORMATION
+        ===================================================== */
+
+        .statement-preview-info {
+            flex: 1;
+        }
+
+        .statement-preview-info h2 {
+            font-family: "Cormorant Garamond", serif;
+            font-size: 29px;
+            color: #202033;
+            margin: 0 0 4px;
+        }
+
+        .statement-role {
+            margin: 0 0 10px;
+            color: #6a70c5;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .statement-short-description {
+            margin: 0;
+            color: #666675;
+            font-size: 14px;
+            line-height: 1.65;
+        }
+
+        /* =====================================================
+           ARROW
+        ===================================================== */
+
+        .statement-arrow {
+            width: 48px;
+            height: 48px;
+
+            min-width: 48px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #b72e61;
+            background: #fff1f6;
+
+            font-size: 24px;
+
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .statement-preview:hover .statement-arrow {
+            transform: translateX(5px);
+            background: #f8dce8;
+        }
+
+        /* =====================================================
+           INDIVIDUAL STATEMENT VIEW
+        ===================================================== */
+
+        #individualStatementView {
+            display: none;
+        }
+
+        .back-to-statements {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 12px 18px;
+
+            border: 1px solid #cfcfe0;
+            border-radius: 10px;
+
+            background: #ffffff;
+
+            color: #4c4c60;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 500;
+
+            margin-bottom: 28px;
+
+            transition: all 0.2s ease;
+        }
+
+        .back-to-statements:hover {
+            color: #b72e61;
+            border-color: #d78ca7;
+            background: #fff8fb;
+        }
+
+        /* =====================================================
+           FULL STATEMENT CARD
+        ===================================================== */
+
+        .full-statement-card {
+            background: #ffffff;
+
+            border: 1px solid #dfe1ef;
+            border-radius: 20px;
+
+            padding: 42px;
+
+            box-shadow: 0 12px 35px rgba(49, 45, 65, 0.07);
+        }
+
+        /* =====================================================
+           FULL PROFILE HEADER
+        ===================================================== */
+
+        .full-statement-header {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+
+            padding-bottom: 30px;
+
+            border-bottom: 1px solid #e1e1eb;
+        }
+
+        .full-avatar {
+            width: 105px;
+            height: 105px;
+
+            min-width: 105px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #ececff;
+
+            border: 5px solid #c4c8ee;
+
+            font-size: 50px;
+        }
+
+        .full-statement-header h2 {
+            font-family: "Cormorant Garamond", serif;
+            font-size: 40px;
+
+            margin: 0 0 5px;
+
+            color: #202033;
+        }
+
+        .full-role {
+            color: #6870c9;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        /* =====================================================
+           PROFILE BOX
+        ===================================================== */
+
+        .profile-box {
+            margin-top: 30px;
+
+            padding: 25px 28px;
+
+            background: #f2f3fb;
+
+            border-left: 4px solid #6970ca;
+
+            border-radius: 8px;
+        }
+
+        .profile-box span {
+            display: block;
+
+            font-family: "Inter", sans-serif;
+
+            font-size: 11px;
+            letter-spacing: 3px;
+            font-weight: 700;
+
+            color: #6970ca;
+
+            margin-bottom: 12px;
+        }
+
+        .profile-box p {
+            margin: 0;
+
+            color: #4f5062;
+
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        /* =====================================================
+           WITNESS STATEMENTS
+        ===================================================== */
+
+        .testimony-heading {
+            margin-top: 38px;
+            margin-bottom: 20px;
+
+            font-size: 11px;
+            letter-spacing: 3px;
+
+            color: #a36a7d;
+
+            font-weight: 700;
+        }
+
+        .testimony {
+            margin-bottom: 20px;
+
+            padding: 24px 28px;
+
+            background: #f6f6fc;
+
+            border-left: 4px solid #a9ace0;
+
+            border-radius: 7px;
+        }
+
+        .testimony p {
+            margin: 0;
+
+            font-family: "Libre Baskerville", serif;
+
+            font-size: 15px;
+            line-height: 2;
+
+            color: #38384a;
+
+            font-style: italic;
+        }
+
+        /* =====================================================
+           INVESTIGATOR NOTE
+        ===================================================== */
+
+        .investigator-note {
+            display: flex;
+            gap: 20px;
+
+            margin-top: 35px;
+            padding: 25px;
+
+            background: #fff9e8;
+
+            border: 1px solid #eadca8;
+            border-radius: 12px;
+        }
+
+        .note-icon {
+            font-size: 30px;
+        }
+
+        .investigator-note h3 {
+            margin: 0 0 8px;
+
+            font-size: 13px;
+            letter-spacing: 2px;
+
+            color: #806c2d;
+        }
+
+        .investigator-note p {
+            margin: 5px 0;
+
+            font-size: 14px;
+            line-height: 1.7;
+
+            color: #625c43;
+        }
+
+        /* =====================================================
+           MAJOR ACTION
+        ===================================================== */
+
+        .major-action {
+            text-align: center;
+            margin-top: 45px;
+        }
+
+        .investigate-button {
+            display: inline-block;
+
+            padding: 17px 35px;
+
+            background: linear-gradient(
+                135deg,
+                #b72e61,
+                #d06b8e
+            );
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+
+            box-shadow: 0 12px 28px rgba(183, 46, 97, 0.25);
+
+            transition: transform 0.2s ease;
+        }
+
+        .investigate-button:hover {
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        /* =====================================================
+           PAGE NAVIGATION
+        ===================================================== */
+
+        .page-navigation {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 18px;
+
+            margin-top: 50px;
+            padding-top: 30px;
+
+            border-top: 1px solid #dedee7;
+        }
+
+        .page-nav-card {
+            display: flex;
+            flex-direction: column;
+
+            gap: 5px;
+
+            padding: 22px;
+
+            background: #ffffff;
+
+            border: 1px solid #e0e0e8;
+
+            border-radius: 15px;
+
+            text-decoration: none;
+
+            transition: all 0.2s ease;
+        }
+
+        .page-nav-card:hover {
+            border-color: #ce7394;
+            box-shadow: 0 8px 20px rgba(50, 40, 60, 0.08);
+        }
+
+        .page-nav-card.next {
+            text-align: right;
+        }
+
+        .nav-direction {
+            font-size: 11px;
+
+            letter-spacing: 1.5px;
+
+            color: #8a8998;
+        }
+
+        .page-nav-card strong {
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: 21px;
+
+            color: #242438;
+        }
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .statements-container {
+                padding: 35px 16px 60px;
+            }
+
+            .statements-heading h1 {
+                font-size: 34px;
+            }
+
+            .statement-preview {
+                padding: 20px;
+                gap: 15px;
+            }
+
+            .statement-avatar {
+                width: 65px;
+                height: 65px;
+                min-width: 65px;
+                font-size: 30px;
+            }
+
+            .statement-preview-info h2 {
+                font-size: 24px;
+            }
+
+            .statement-short-description {
+                font-size: 13px;
+            }
+
+            .statement-arrow {
+                width: 40px;
+                height: 40px;
+                min-width: 40px;
+            }
+
+            .full-statement-card {
+                padding: 25px 20px;
+            }
+
+            .full-statement-header {
+                align-items: flex-start;
+            }
+
+            .full-avatar {
+                width: 75px;
+                height: 75px;
+                min-width: 75px;
+                font-size: 36px;
+            }
+
+            .full-statement-header h2 {
+                font-size: 31px;
+            }
+
+            .page-navigation {
+                grid-template-columns: 1fr;
+            }
+
+            .page-nav-card.next {
+                text-align: left;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body class="investigation-page">
+
+
+<!-- =====================================================
+     TOP HEADER
+===================================================== -->
+
+<header class="investigation-header">
+
+    <div class="investigation-brand">
+        <span class="brand-icon">🏛️</span>
+        <span>The Glass House</span>
+    </div>
+
+    <button class="close-case" aria-label="Close case">
+        ×
+    </button>
+
+</header>
+
+
+<!-- =====================================================
+     CASE NAVIGATION
+===================================================== -->
+
+<nav class="case-navigation">
+
+    <a href="case-001.html">
+        📋 Case Dossier
+        <span class="nav-check">✓</span>
+    </a>
+
+    <a href="suspects.html">
+        👥 Suspects
+        <span class="nav-check">✓</span>
+    </a>
+
+    <a href="story.html">
+        📖 The Story
+        <span class="nav-check">✓</span>
+    </a>
+
+    <a href="crime-scene.html">
+        📷 Crime Scene
+        <span class="nav-check">✓</span>
+    </a>
+
+    <a href="statements.html" class="active">
+        🗣️ Statements
+    </a>
+
+    <a href="evidence.html">
+        🔎 Evidence
+    </a>
+
+    <a href="secret-notes.html">
+        📝 Secret Notes
+        <span class="nav-check">✓</span>
+    </a>
+
+    <a href="interrogation.html">
+        ❓ Interrogation
+        <span class="nav-check">✓</span>
+    </a>
+
+    <a href="solution.html" class="disabled">
+        ⚖️ Solution
+    </a>
+
+</nav>
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="statements-container">
+
+
+    <!-- =================================================
+         ALL STATEMENTS VIEW
+    ================================================== -->
+
+    <section id="allStatementsView">
+
+        <div class="statements-heading">
+
+            <h1>
+                🗣️ Witness Statements
+            </h1>
+
+            <p>
+                Five people were present at Ashford Manor that evening.
+                Each remembers the events differently.
+                Read carefully — a statement may reveal more than the
+                speaker intended.
+            </p>
+
+        </div>
+
+
+        <div class="statement-list">
+
+
+            <!-- =============================================
+                 ELEANOR
+            ============================================== -->
+
+            <article
+                class="statement-preview"
+                onclick="openStatement('eleanor')"
+            >
+
+                <div class="statement-avatar">
+                    👩🏻
+                </div>
+
+                <div class="statement-preview-info">
+
+                    <h2>
+                        Eleanor Ashford
+                    </h2>
+
+                    <p class="statement-role">
+                        Owner of Ashford Manor · Age 48
+                    </p>
+
+                    <p class="statement-short-description">
+                        Owner of Ashford Manor and keeper of the
+                        Ashford Diamond Necklace. She knows the manor,
+                        its locks and its routines intimately.
+                    </p>
+
+                </div>
+
+                <div class="statement-arrow">
+                    →
+                </div>
+
+            </article>
+
+
+            <!-- =============================================
+                 DANIEL
+            ============================================== -->
+
+            <article
+                class="statement-preview"
+                onclick="openStatement('daniel')"
+            >
+
+                <div class="statement-avatar">
+                    👨🏻
+                </div>
+
+                <div class="statement-preview-info">
+
+                    <h2>
+                        Daniel Ashford
+                    </h2>
+
+                    <p class="statement-role">
+                        Eleanor's Son · Age 24
+                    </p>
+
+                    <p class="statement-short-description">
+                        Eleanor's only son. He has been struggling
+                        financially and knows the manor extremely well
+                        after growing up there.
+                    </p>
+
+                </div>
+
+                <div class="statement-arrow">
+                    →
+                </div>
+
+            </article>
+
+
+            <!-- =============================================
+                 MARCUS
+            ============================================== -->
+
+            <article
+                class="statement-preview"
+                onclick="openStatement('marcus')"
+            >
+
+                <div class="statement-avatar">
+                    👨🏻‍💼
+                </div>
+
+                <div class="statement-preview-info">
+
+                    <h2>
+                        Marcus Reed
+                    </h2>
+
+                    <p class="statement-role">
+                        Family Friend · Age 41
+                    </p>
+
+                    <p class="statement-short-description">
+                        A longtime family friend who has visited the
+                        manor for more than fifteen years and is familiar
+                        with the property.
+                    </p>
+
+                </div>
+
+                <div class="statement-arrow">
+                    →
+                </div>
+
+            </article>
+
+
+            <!-- =============================================
+                 CLARA
+            ============================================== -->
+
+            <article
+                class="statement-preview"
+                onclick="openStatement('clara')"
+            >
+
+                <div class="statement-avatar">
+                    👩🏻‍🍳
+                </div>
+
+                <div class="statement-preview-info">
+
+                    <h2>
+                        Clara Wilson
+                    </h2>
+
+                    <p class="statement-role">
+                        Housekeeper · Age 39
+                    </p>
+
+                    <p class="statement-short-description">
+                        Has worked at Ashford Manor for nearly eight
+                        years and knows the household routines,
+                        rooms and valuables.
+                    </p>
+
+                </div>
+
+                <div class="statement-arrow">
+                    →
+                </div>
+
+            </article>
+
+
+            <!-- =============================================
+                 THOMAS
+            ============================================== -->
+
+            <article
+                class="statement-preview"
+                onclick="openStatement('thomas')"
+            >
+
+                <div class="statement-avatar">
+                    👨🏻‍🍳
+                </div>
+
+                <div class="statement-preview-info">
+
+                    <h2>
+                        Thomas Blake
+                    </h2>
+
+                    <p class="statement-role">
+                        Private Chef · Age 46
+                    </p>
+
+                    <p class="statement-short-description">
+                        The Ashford family's private chef. He has
+                        access to the kitchen and its back entrance
+                        and was preparing dessert that evening.
+                    </p>
+
+                </div>
+
+                <div class="statement-arrow">
+                    →
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         INDIVIDUAL STATEMENT VIEW
+    ================================================== -->
+
+    <section id="individualStatementView">
+
+        <button
+            class="back-to-statements"
+            onclick="showAllStatements()"
+        >
+            ← Back to All Statements
+        </button>
+
+
+        <!-- =================================================
+             ELEANOR
+        ================================================== -->
+
+        <article
+            class="full-statement-card"
+            id="statement-eleanor"
+        >
+
+            <div class="full-statement-header">
+
+                <div class="full-avatar">
+                    👩🏻
+                </div>
+
+                <div>
+
+                    <h2>
+                        Eleanor Ashford
+                    </h2>
+
+                    <div class="full-role">
+                        Owner of Ashford Manor · Age 48
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-box">
+
+                <span>
+                    PROFILE
+                </span>
+
+                <p>
+                    Eleanor Ashford is the owner of Ashford Manor and the
+                    keeper of the Ashford Diamond Necklace. She has lived
+                    in the manor for more than twenty years and knows its
+                    rooms, locks and routines intimately.
+                </p>
+
+            </div>
+
+
+            <div class="testimony-heading">
+                WITNESS STATEMENT
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "I showed the necklace to everyone at around 8:20.
+                    It was something of a tradition whenever we had guests.
+                    I remember opening the cabinet myself."
+                </p>
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "After everyone had seen it, I closed the cabinet and
+                    made sure it was locked. I then returned to the dining
+                    room. I had no reason to think anything was wrong."
+                </p>
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "The necklace belonged to my family long before I
+                    inherited the house. I understand why people might
+                    think I would benefit from losing it, but that necklace
+                    means far more to me than its insurance value."
+                </p>
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "The camera going down was strange. I assumed it was
+                    some kind of technical problem. The system has never
+                    been completely reliable."
+                </p>
+            </div>
+
+        </article>
+
+
+
+        <!-- =================================================
+             DANIEL
+        ================================================== -->
+
+        <article
+            class="full-statement-card"
+            id="statement-daniel"
+            style="display:none;"
+        >
+
+            <div class="full-statement-header">
+
+                <div class="full-avatar">
+                    👨🏻
+                </div>
+
+                <div>
+
+                    <h2>
+                        Daniel Ashford
+                    </h2>
+
+                    <div class="full-role">
+                        Eleanor's Son · Age 24
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-box">
+
+                <span>
+                    PROFILE
+                </span>
+
+                <p>
+                    Daniel is Eleanor's only son. He has recently been
+                    struggling financially and has occasionally argued
+                    with his mother about money. He knows the manor well
+                    and has spent most of his childhood there.
+                </p>
+
+            </div>
+
+
+            <div class="testimony-heading">
+                WITNESS STATEMENT
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "I went upstairs around 8:15. I had an important
+                    phone call to deal with and didn't want everyone
+                    listening in."
+                </p>
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "I stayed upstairs for most of the evening. I remember
+                    hearing people moving around downstairs, but I wasn't
+                    paying attention to what they were doing."
+                </p>
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "Yes, I knew Mother was showing the necklace. Everyone
+                    knew about it. It's practically the first thing people
+                    ask about when they visit."
+                </p>
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "I didn't go anywhere near the study. I certainly didn't
+                    touch the cabinet. I wouldn't even know why I'd need
+                    to open it."
+                </p>
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "When I came back downstairs, everyone seemed confused.
+                    Mother was already talking about the missing necklace.
+                    That's when I realized something had happened."
+                </p>
+            </div>
+
+        </article>
+
+
+
+        <!-- =================================================
+             MARCUS
+        ================================================== -->
+
+        <article
+            class="full-statement-card"
+            id="statement-marcus"
+            style="display:none;"
+        >
+
+            <div class="full-statement-header">
+
+                <div class="full-avatar">
+                    👨🏻‍💼
+                </div>
+
+                <div>
+
+                    <h2>
+                        Marcus Reed
+                    </h2>
+
+                    <div class="full-role">
+                        Family Friend · Age 41
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-box">
+
+                <span>
+                    PROFILE
+                </span>
+
+                <p>
+                    Marcus Reed has known the Ashford family for more than
+                    fifteen years. He is a frequent guest at the manor and
+                    is familiar with the property, although he does not
+                    live there.
+                </p>
+
+            </div>
+
+
+            <div class="testimony-heading">
+                WITNESS STATEMENT
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "I stayed in the living room after dinner. Eleanor was
+                    talking with Clara, and Thomas was still working in
+                    the kitchen."
+                </p>
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "Around 8:30, I stepped outside for some fresh air.
+                    It was only for a few minutes. I remember the ground
+                    was wet because of the rain earlier."
+                </p>
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "I didn't enter the study. I have no reason to go in
+                    there unless Eleanor specifically asks me to."
+                </p>
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "When I came back inside, everyone was still where
+                    I expected them to be. I didn't notice anything
+                    unusual."
+                </p>
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "The necklace is beautiful, certainly, but I have
+                    never had any interest in owning it. Eleanor knows
+                    that."
+                </p>
+            </div>
+
+        </article>
+
+
+
+        <!-- =================================================
+             CLARA
+        ================================================== -->
+
+        <article
+            class="full-statement-card"
+            id="statement-clara"
+            style="display:none;"
+        >
+
+            <div class="full-statement-header">
+
+                <div class="full-avatar">
+                    👩🏻‍🍳
+                </div>
+
+                <div>
+
+                    <h2>
+                        Clara Wilson
+                    </h2>
+
+                    <div class="full-role">
+                        Housekeeper · Age 39
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-box">
+
+                <span>
+                    PROFILE
+                </span>
+
+                <p>
+                    Clara has worked at Ashford Manor for nearly eight
+                    years. She manages much of the household routine and
+                    knows which rooms are occupied, where valuables are
+                    stored and how the house is arranged.
+                </p>
+
+            </div>
+
+
+            <div class="testimony-heading">
+                WITNESS STATEMENT
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "I was in the kitchen preparing dessert. There was
+                    still quite a bit to do before it could be served."
+                </p>
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "At around 8:30 I heard a door close somewhere along
+                    the hallway. I couldn't tell exactly who it was.
+                    There were people moving around that evening."
+                </p>
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "I know the study well. I clean it regularly, but I
+                    wouldn't go inside without a reason while guests are
+                    visiting."
+                </p>
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "The camera system is old. I've seen it lose its signal
+                    before, although I don't know why it happened that
+                    night."
+                </p>
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "I didn't see anyone carrying the necklace. If someone
+                    took it, they would have had to be very careful."
+                </p>
+            </div>
+
+        </article>
+
+
+
+        <!-- =================================================
+             THOMAS
+        ================================================== -->
+
+        <article
+            class="full-statement-card"
+            id="statement-thomas"
+            style="display:none;"
+        >
+
+            <div class="full-statement-header">
+
+                <div class="full-avatar">
+                    👨🏻‍🍳
+                </div>
+
+                <div>
+
+                    <h2>
+                        Thomas Blake
+                    </h2>
+
+                    <div class="full-role">
+                        Private Chef · Age 46
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-box">
+
+                <span>
+                    PROFILE
+                </span>
+
+                <p>
+                    Thomas is the Ashford family's private chef. He has
+                    worked for Eleanor for three years and was responsible
+                    for preparing dessert and finishing the evening meal.
+                    He had access to the kitchen and its back entrance.
+                </p>
+
+            </div>
+
+
+            <div class="testimony-heading">
+                WITNESS STATEMENT
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "I didn't leave the kitchen. I was finishing the
+                    dessert and keeping an eye on the oven."
+                </p>
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "There was no reason for me to go into the study.
+                    Eleanor had already shown everyone the necklace before
+                    I returned to preparing the meal."
+                </p>
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "The kitchen has a back door, yes. But I didn't use it.
+                    I had everything I needed inside."
+                </p>
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "I did notice the weather had made the garden muddy.
+                    I had been outside earlier in the afternoon to bring
+                    supplies inside."
+                </p>
+            </div>
+
+
+            <div class="testimony">
+                <p>
+                    "When Eleanor announced that the necklace was gone,
+                    everyone immediately started looking at one another.
+                    I had nothing to hide."
+                </p>
+            </div>
+
+        </article>
+
+
+
+        <!-- =================================================
+             INVESTIGATOR NOTE
+        ================================================== -->
+
+        <section class="investigator-note">
+
+            <div class="note-icon">
+                🔎
+            </div>
+
+            <div>
+
+                <h3>
+                    INVESTIGATOR'S NOTE
+                </h3>
+
+                <p>
+                    Statements are not evidence by themselves. Compare
+                    what each person says with the crime scene, physical
+                    evidence and timeline.
+                </p>
+
+                <p>
+                    Pay particular attention to details that appear
+                    insignificant. A person does not always lie by
+                    inventing a story — sometimes they lie by leaving
+                    something out.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             NEXT BUTTON
+        ================================================== -->
+
+        <div class="major-action">
+
+            <a
+                href="evidence.html"
+                class="investigate-button"
+            >
+                EXAMINE THE EVIDENCE →
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             PREVIOUS / NEXT
+        ================================================== -->
+
+        <div class="page-navigation">
+
+            <a
+                href="crime-scene.html"
+                class="page-nav-card"
+            >
+
+                <span class="nav-direction">
+                    ← &nbsp; PREVIOUS
+                </span>
+
+                <strong>
+                    Crime Scene
+                </strong>
+
+            </a>
+
+
+            <a
+                href="evidence.html"
+                class="page-nav-card next"
+            >
+
+                <span class="nav-direction">
+                    NEXT &nbsp; →
+                </span>
+
+                <strong>
+                    Evidence
+                </strong>
+
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+    /* =====================================================
+       CLOSE CASE
+    ===================================================== */
+
+    const closeButton = document.querySelector(".close-case");
+
+    if (closeButton) {
+
+        closeButton.addEventListener("click", function () {
+
+            window.location.href = "cases.html";
+
+        });
+
+    }
+
+
+    /* =====================================================
+       OPEN INDIVIDUAL STATEMENT
+    ===================================================== */
+
+    function openStatement(person) {
+
+        const allStatements =
+            document.getElementById("allStatementsView");
+
+        const individualView =
+            document.getElementById("individualStatementView");
+
+        /* Hide the list */
+
+        allStatements.style.display = "none";
+
+        /* Show individual page */
+
+        individualView.style.display = "block";
+
+
+        /* Hide every person's statement */
+
+        const statements =
+            document.querySelectorAll(".full-statement-card");
+
+        statements.forEach(function (statement) {
+
+            statement.style.display = "none";
+
+        });
+
+
+        /* Show selected person */
+
+        const selectedStatement =
+            document.getElementById("statement-" + person);
+
+        if (selectedStatement) {
+
+            selectedStatement.style.display = "block";
+
+        }
+
+
+        /* Scroll to top */
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }
+
+
+    /* =====================================================
+       BACK TO ALL STATEMENTS
+    ===================================================== */
+
+    function showAllStatements() {
+
+        const allStatements =
+            document.getElementById("allStatementsView");
+
+        const individualView =
+            document.getElementById("individualStatementView");
+
+
+        /* Hide individual */
+
+        individualView.style.display = "none";
+
+
+        /* Show all */
+
+        allStatements.style.display = "block";
+
+
+        /* Scroll back to top */
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Solution | The Glass House</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="solution-page">
+
+<header class="glass-header">
+
+    <div class="glass-title">
+        <span>🏛️</span> The Glass House
+    </div>
+
+    <div class="close-button" onclick="closeCase()">×</div>
+
+</header>
+
+
+<!-- CASE NAVIGATION -->
+
+<nav class="case-navigation">
+
+    <a href="case-001.html">
+        📋 Case Dossier <span class="check">✓</span>
+    </a>
+
+    <a href="suspects.html">
+        👥 Suspects <span class="check">✓</span>
+    </a>
+
+    <a href="story.html">
+        📖 The Story <span class="check">✓</span>
+    </a>
+
+    <a href="crime-scene.html">
+        📸 Crime Scene <span class="check">✓</span>
+    </a>
+
+    <a href="statements.html">
+        🗣️ Statements <span class="check">✓</span>
+    </a>
+
+    <a href="evidence.html">
+        🔎 Evidence <span class="check">✓</span>
+    </a>
+
+    <a href="secret-notes.html">
+        📝 Secret Notes <span class="check">✓</span>
+    </a>
+
+    <a href="interrogation.html">
+        ❓ Interrogation <span class="check">✓</span>
+    </a>
+
+    <a href="solution.html" class="active">
+        ⚖️ Solution
+    </a>
+
+</nav>
+
+
+<main class="solution-container">
+
+
+    <!-- ==========================================
+         ACCUSATION SECTION
+    =========================================== -->
+
+    <section id="accusationSection">
+
+        <div class="solution-heading">
+
+            <span class="solution-label">
+                FINAL DECISION
+            </span>
+
+            <h1>
+                Who Stole The Necklace?
+            </h1>
+
+            <p>
+                You have examined the evidence, studied the statements,
+                read the private messages and questioned the suspects.
+            </p>
+
+            <p class="solution-instruction">
+                Select the person you believe is responsible.
+            </p>
+
+        </div>
+
+
+        <!-- SUSPECTS -->
+
+        <div class="solution-suspects">
+
+
+            <!-- ELEANOR -->
+
+            <div class="solution-suspect"
+                 onclick="selectSuspect('Eleanor Ashford', this)">
+
+                <div class="solution-avatar">
+                    EA
+                </div>
+
+                <div class="solution-suspect-info">
+
+                    <h2>Eleanor Ashford</h2>
+
+                    <p>
+                        48 · Owner of Ashford Manor
+                    </p>
+
+                </div>
+
+                <div class="solution-arrow">
+                    →
+                </div>
+
+            </div>
+
+
+            <!-- DANIEL -->
+
+            <div class="solution-suspect"
+                 onclick="selectSuspect('Daniel Ashford', this)">
+
+                <div class="solution-avatar">
+                    DA
+                </div>
+
+                <div class="solution-suspect-info">
+
+                    <h2>Daniel Ashford</h2>
+
+                    <p>
+                        24 · Eleanor's son
+                    </p>
+
+                </div>
+
+                <div class="solution-arrow">
+                    →
+                </div>
+
+            </div>
+
+
+            <!-- MARCUS -->
+
+            <div class="solution-suspect"
+                 onclick="selectSuspect('Marcus Reed', this)">
+
+                <div class="solution-avatar">
+                    MR
+                </div>
+
+                <div class="solution-suspect-info">
+
+                    <h2>Marcus Reed</h2>
+
+                    <p>
+                        41 · Family friend
+                    </p>
+
+                </div>
+
+                <div class="solution-arrow">
+                    →
+                </div>
+
+            </div>
+
+
+            <!-- CLARA -->
+
+            <div class="solution-suspect"
+                 onclick="selectSuspect('Clara Wilson', this)">
+
+                <div class="solution-avatar">
+                    CW
+                </div>
+
+                <div class="solution-suspect-info">
+
+                    <h2>Clara Wilson</h2>
+
+                    <p>
+                        39 · Housekeeper
+                    </p>
+
+                </div>
+
+                <div class="solution-arrow">
+                    →
+                </div>
+
+            </div>
+
+
+            <!-- THOMAS -->
+
+            <div class="solution-suspect"
+                 onclick="selectSuspect('Thomas Blake', this)">
+
+                <div class="solution-avatar">
+                    TB
+                </div>
+
+                <div class="solution-suspect-info">
+
+                    <h2>Thomas Blake</h2>
+
+                    <p>
+                        46 · Private chef
+                    </p>
+
+                </div>
+
+                <div class="solution-arrow">
+                    →
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SELECTED SUSPECT -->
+
+        <div id="selectedAccusation"
+             class="selected-accusation">
+
+            <span>You are accusing:</span>
+
+            <strong id="selectedSuspectName">
+                —
+            </strong>
+
+        </div>
+
+
+        <!-- ACCUSE BUTTON -->
+
+        <div class="accuse-area">
+
+            <button
+                type="button"
+                id="accuseButton"
+                class="accuse-button"
+                onclick="submitAccusation()"
+                disabled>
+
+                ACCUSE →
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         RESULT SECTION
+    =========================================== -->
+
+    <section id="solutionResult" style="display:none;">
+
+
+        <div id="resultStatus"
+             class="result-status">
+
+        </div>
+
+
+        <div class="result-heading">
+
+            <span class="solution-label">
+                CASE #001
+            </span>
+
+            <h1 id="resultTitle">
+                The Solution
+            </h1>
+
+            <p id="resultMessage">
+            </p>
+
+        </div>
+
+
+        <!-- THE ACTUAL SOLUTION -->
+
+        <div class="true-solution-card">
+
+            <div class="solution-reveal-avatar">
+                DA
+            </div>
+
+            <div class="true-solution-content">
+
+                <span class="reveal-label">
+                    THE ACTUAL THIEF
+                </span>
+
+                <h2>
+                    Daniel Ashford
+                </h2>
+
+                <p class="solution-role">
+                    24 · Eleanor Ashford's son
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- HOW -->
+
+        <div class="solution-explanation">
+
+            <div class="explanation-number">
+                01
+            </div>
+
+            <div>
+
+                <span class="explanation-label">
+                    HOW DID HE DO IT?
+                </span>
+
+                <h2>
+                    He was already inside.
+                </h2>
+
+                <p>
+                    Daniel did not need to enter through the window
+                    or use the kitchen entrance. He was already inside
+                    Ashford Manor as one of the guests.
+                </p>
+
+                <p>
+                    After the necklace was displayed, Daniel used his
+                    knowledge of the study and the cabinet to take the
+                    necklace. He then opened the study window and
+                    staged the scene to make it appear that someone
+                    had entered from outside.
+                </p>
+
+                <p>
+                    The muddy footprint near the window supported the
+                    false story, but the clean windowsill and untouched
+                    flowerbed showed that the window was not the real
+                    entry point.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- THE CABINET -->
+
+        <div class="solution-explanation">
+
+            <div class="explanation-number">
+                02
+            </div>
+
+            <div>
+
+                <span class="explanation-label">
+                    THE CABINET
+                </span>
+
+                <h2>
+                    The lock was the hidden clue.
+                </h2>
+
+                <p>
+                    The display cabinet showed no signs of forced entry.
+                    That meant the thief either had a key or understood
+                    how the locking mechanism worked.
+                </p>
+
+                <p>
+                    Daniel had grown up in the manor and had watched
+                    Eleanor use the cabinet many times.
+                </p>
+
+                <p>
+                    The cabinet had a subtle flaw: if the key was turned
+                    slightly past the locking position, the cabinet could
+                    appear locked even though the latch had not fully
+                    engaged.
+                </p>
+
+                <p>
+                    Daniel knew this and used it to make the theft look
+                    like an impossible locked-room crime.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CAMERA -->
+
+        <div class="solution-explanation">
+
+            <div class="explanation-number">
+                03
+            </div>
+
+            <div>
+
+                <span class="explanation-label">
+                    THE CAMERA
+                </span>
+
+                <h2>
+                    He created a gap in the timeline.
+                </h2>
+
+                <p>
+                    The hallway security camera stopped recording at
+                    approximately 8:25 PM and returned at 8:40 PM.
+                </p>
+
+                <p>
+                    This gave Daniel enough time to move around the
+                    house without appearing on camera.
+                </p>
+
+                <p>
+                    His familiarity with the manor and its security
+                    system made the camera interruption far more
+                    significant than it first appeared.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- PHONE -->
+
+        <div class="solution-explanation">
+
+            <div class="explanation-number">
+                04
+            </div>
+
+            <div>
+
+                <span class="explanation-label">
+                    THE FALSE ALIBI
+                </span>
+
+                <h2>
+                    His phone call did not cover the whole disappearance.
+                </h2>
+
+                <p>
+                    Daniel claimed that he was upstairs on an important
+                    phone call from around 8:15 until 8:40.
+                </p>
+
+                <p>
+                    The phone records told a different story.
+                    The actual call began at approximately 8:37 PM
+                    and ended at 8:44 PM.
+                </p>
+
+                <p>
+                    That left a significant gap between 8:20 and 8:37 PM —
+                    exactly when the necklace disappeared.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- WHY -->
+
+        <div class="solution-explanation final-explanation">
+
+            <div class="explanation-number">
+                05
+            </div>
+
+            <div>
+
+                <span class="explanation-label">
+                    WHY DID HE DO IT?
+                </span>
+
+                <h2>
+                    Financial pressure.
+                </h2>
+
+                <p>
+                    Daniel had been struggling financially and had
+                    argued with Eleanor about money.
+                </p>
+
+                <p>
+                    The necklace was worth approximately ₹2.4 crore.
+                    Taking it gave Daniel access to an enormous amount
+                    of potential value.
+                </p>
+
+                <p>
+                    His plan was not simply to steal the necklace.
+                    He wanted to make the theft look like an outside
+                    intrusion, while his phone call created a false
+                    impression that he had been upstairs.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- FINAL CONNECTION -->
+
+        <div class="final-connection">
+
+            <span>
+                THE FINAL CONNECTION
+            </span>
+
+            <h2>
+                The most suspicious clue was not the most important clue.
+            </h2>
+
+            <p>
+                The muddy footprint pointed toward Marcus.
+                The kitchen access made Thomas suspicious.
+                Clara knew the manor.
+                Eleanor controlled the necklace.
+            </p>
+
+            <p>
+                But Daniel's incomplete alibi, his knowledge of the
+                manor, the cabinet mechanism, the camera interruption
+                and the staged window all fit together.
+            </p>
+
+            <strong>
+                Daniel Ashford stole the Ashford Diamond Necklace.
+            </strong>
+
+        </div>
+
+
+
+        <!-- NEXT STEP -->
+
+        <div class="solution-actions">
+
+            <a href="cases.html"
+               class="solution-home-button">
+
+                RETURN TO CASE FILES
+
+            </a>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<script>
+
+let selectedSuspect = "";
+
+
+
+/* ==========================================
+   SELECT SUSPECT
+========================================== */
+
+function selectSuspect(name, card) {
+
+    selectedSuspect = name;
+
+    /* Remove previous selection */
+
+    document.querySelectorAll(".solution-suspect")
+        .forEach(function(item) {
+
+            item.classList.remove("selected");
+
+        });
+
+
+    /* Highlight selected suspect */
+
+    card.classList.add("selected");
+
+
+    /* Show selected name */
+
+    document.getElementById("selectedSuspectName")
+        .textContent = name;
+
+
+    document.getElementById("selectedAccusation")
+        .classList.add("visible");
+
+
+    /* Enable accuse button */
+
+    document.getElementById("accuseButton")
+        .disabled = false;
+
+}
+
+
+
+/* ==========================================
+   ACCUSE
+========================================== */
+
+function submitAccusation() {
+
+    if (selectedSuspect === "") {
+
+        return;
+
+    }
+
+
+    /* Hide accusation */
+
+    document.getElementById("accusationSection")
+        .style.display = "none";
+
+
+    /* Show solution */
+
+    document.getElementById("solutionResult")
+        .style.display = "block";
+
+
+    const resultStatus =
+        document.getElementById("resultStatus");
+
+    const resultTitle =
+        document.getElementById("resultTitle");
+
+    const resultMessage =
+        document.getElementById("resultMessage");
+
+
+    /* CORRECT */
+
+    if (selectedSuspect === "Daniel Ashford") {
+
+        resultStatus.textContent =
+            "✓ CASE SUCCESSFULLY SOLVED";
+
+        resultStatus.classList.add("success");
+
+        resultTitle.textContent =
+            "Excellent Detective Work.";
+
+        resultMessage.textContent =
+            "Your accusation was correct. You identified the person responsible for the disappearance of the Ashford Diamond Necklace.";
+
+    }
+
+
+    /* WRONG */
+
+    else {
+
+        resultStatus.textContent =
+            "✕ CASE FAILED";
+
+        resultStatus.classList.add("failed");
+
+        resultTitle.textContent =
+            "Your Accusation Was Incorrect.";
+
+        resultMessage.textContent =
+            "The person you accused was not responsible. The complete solution is revealed below.";
+
+    }
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+
+
+/* ==========================================
+   CLOSE CASE
+========================================== */
+
+function closeCase() {
+
+    window.location.href = "cases.html";
+
+}
+
+</script>
+
+
+</body>
+</html>

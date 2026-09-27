@@ -1,0 +1,99 @@
+{
+    "caseId": "001",
+
+    "title": "The Missing Necklace",
+
+    "category": "THEFT",
+
+    "location": "Ashford Estate",
+
+    "date": "Saturday, 14 November",
+
+    "time": "11:47 PM",
+
+    "victim": {
+        "name": "Eleanor Ashford",
+        "age": 54,
+        "occupation": "Jewellery Collector"
+    },
+
+    "stolenItem": {
+        "name": "The Ashford Diamond Necklace",
+        "value": "₹2.4 Crore",
+        "description": "A rare diamond necklace inherited by Eleanor Ashford."
+    },
+
+    "suspects": [
+
+        {
+            "id": 1,
+            "name": "Victoria Ashford",
+            "relation": "Daughter",
+            "occupation": "Art Curator"
+        },
+
+        {
+            "id": 2,
+            "name": "Daniel Moore",
+            "relation": "Family Lawyer",
+            "occupation": "Lawyer"
+        },
+
+        {
+            "id": 3,
+            "name": "Michael Reed",
+            "relation": "Family Friend",
+            "occupation": "Businessman"
+        },
+
+        {
+            "id": 4,
+            "name": "Sophia Blake",
+            "relation": "House Manager",
+            "occupation": "Estate Manager"
+        },
+
+        {
+            "id": 5,
+            "name": "Thomas Green",
+            "relation": "Security Guard",
+            "occupation": "Security Officer"
+        },
+
+        {
+            "id": 6,
+            "name": "Lucas Ashford",
+            "relation": "Nephew",
+            "occupation": "Student"
+        }
+
+    ],
+
+    "evidence": [
+
+        {
+            "id": 1,
+            "name": "Broken Display Lock",
+            "description": "The lock on the jewellery case appears to have been forced."
+        },
+
+        {
+            "id": 2,
+            "name": "Wine Glass",
+            "description": "A partially filled wine glass was discovered beside the display."
+        },
+
+        {
+            "id": 3,
+            "name": "Security Footage",
+            "description": "Seven minutes of security footage are missing."
+        },
+
+        {
+            "id": 4,
+            "name": "Silver Thread",
+            "description": "A small silver thread was found caught inside the display lock."
+        }
+
+    ]
+}

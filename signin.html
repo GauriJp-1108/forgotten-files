@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign In | The Detective Bureau</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top, rgba(255, 255, 255, 0.06), transparent 35%),
+                linear-gradient(135deg, #080808, #151515 50%, #050505);
+            color: #e8e8e8;
+            font-family: Georgia, "Times New Roman", serif;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            overflow: hidden;
+        }
+
+        /* Background texture */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            background-image:
+                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        /* Main container */
+        .login-container {
+            width: 420px;
+            max-width: 90%;
+
+            background: rgba(18, 18, 18, 0.96);
+
+            border: 1px solid #3a3a3a;
+
+            padding: 45px 42px;
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.7),
+                inset 0 0 40px rgba(255, 255, 255, 0.015);
+
+            position: relative;
+        }
+
+        /* Decorative corners */
+        .login-container::before,
+        .login-container::after {
+            content: "";
+            position: absolute;
+
+            width: 35px;
+            height: 35px;
+
+            border-color: #777;
+            border-style: solid;
+        }
+
+        .login-container::before {
+            top: 12px;
+            left: 12px;
+
+            border-width: 1px 0 0 1px;
+        }
+
+        .login-container::after {
+            bottom: 12px;
+            right: 12px;
+
+            border-width: 0 1px 1px 0;
+        }
+
+        /* Logo */
+        .logo {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .logo-icon {
+            font-size: 42px;
+            margin-bottom: 8px;
+        }
+
+        .logo h1 {
+            font-size: 27px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #f1f1f1;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            letter-spacing: 2px;
+            margin-bottom: 35px;
+            text-transform: uppercase;
+        }
+
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: #333;
+            margin-bottom: 30px;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+
+            color: #aaa;
+
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 14px 15px;
+
+            background: #0c0c0c;
+
+            border: 1px solid #383838;
+
+            color: #eee;
+
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 15px;
+
+            outline: none;
+
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #999;
+            background: #101010;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.04);
+        }
+
+        input::placeholder {
+            color: #555;
+        }
+
+        /* Password toggle */
+        .toggle-password {
+            position: absolute;
+
+            right: 13px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            background: none;
+            border: none;
+
+            color: #777;
+
+            cursor: pointer;
+
+            font-size: 13px;
+
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
+        .toggle-password:hover {
+            color: #ddd;
+        }
+
+        /* Remember me */
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin: 4px 0 25px;
+
+            font-size: 12px;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            color: #888;
+        }
+
+        .remember input {
+            width: auto;
+            accent-color: #888;
+        }
+
+        .forgot {
+            color: #999;
+            text-decoration: none;
+        }
+
+        .forgot:hover {
+            color: #fff;
+        }
+
+        /* Login button */
+        .login-btn {
+            width: 100%;
+
+            padding: 15px;
+
+            background: #dedede;
+            color: #111;
+
+            border: none;
+
+            font-family: Georgia, "Times New Roman", serif;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            letter-spacing: 2px;
+            text-transform: uppercase;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Error message */
+        .error-message {
+            display: none;
+
+            background: rgba(120, 20, 20, 0.15);
+
+            border: 1px solid #602626;
+
+            color: #d98989;
+
+            padding: 10px 12px;
+
+            font-size: 12px;
+
+            margin-bottom: 20px;
+
+            text-align: center;
+        }
+
+        /* Success message */
+        .success-message {
+            display: none;
+
+            background: rgba(30, 100, 50, 0.15);
+
+            border: 1px solid #315c3d;
+
+            color: #91c59d;
+
+            padding: 10px 12px;
+
+            font-size: 12px;
+
+            margin-bottom: 20px;
+
+            text-align: center;
+        }
+
+        /* Bottom text */
+        .bottom-text {
+            text-align: center;
+
+            margin-top: 28px;
+
+            color: #666;
+
+            font-size: 12px;
+        }
+
+        .bottom-text a {
+            color: #aaa;
+            text-decoration: none;
+        }
+
+        .bottom-text a:hover {
+            color: #fff;
+        }
+
+        /* Case number */
+        .case-number {
+            position: absolute;
+
+            bottom: 10px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            color: #444;
+
+            font-size: 9px;
+
+            letter-spacing: 2px;
+
+            white-space: nowrap;
+        }
+
+        /* Mobile */
+        @media (max-width: 500px) {
+
+            .login-container {
+                padding: 35px 25px;
+            }
+
+            .logo h1 {
+                font-size: 21px;
+                letter-spacing: 3px;
+            }
+
+            .subtitle {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🕵️
+            </div>
+
+            <h1>Detective Bureau</h1>
+
+        </div>
+
+        <div class="subtitle">
+            Confidential Investigation Portal
+        </div>
+
+        <div class="divider"></div>
+
+
+        <!-- Login Form -->
+
+        <form id="loginForm">
+
+            <!-- Email -->
+
+            <div class="form-group">
+
+                <label for="email">
+                    Detective ID / Email
+                </label>
+
+                <div class="input-wrapper">
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- Password -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <div class="input-wrapper">
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                    >
+
+                    <button
+                        type="button"
+                        class="toggle-password"
+                        id="togglePassword"
+                    >
+                        SHOW
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Error -->
+
+            <div
+                class="error-message"
+                id="errorMessage"
+            >
+                Invalid credentials.
+            </div>
+
+
+            <!-- Success -->
+
+            <div
+                class="success-message"
+                id="successMessage"
+            >
+                Authentication successful. Opening investigation bureau...
+            </div>
+
+
+            <!-- Options -->
+
+            <div class="options">
+
+                <label class="remember">
+
+                    <input
+                        type="checkbox"
+                        id="remember"
+                    >
+
+                    Remember me
+
+                </label>
+
+                <a
+                    href="#"
+                    class="forgot"
+                    onclick="forgotPassword(event)"
+                >
+                    Forgot password?
+                </a>
+
+            </div>
+
+
+            <!-- Submit -->
+
+            <button
+                type="submit"
+                class="login-btn"
+            >
+                Enter Investigation Bureau
+            </button>
+
+        </form>
+
+
+        <div class="bottom-text">
+
+            New investigator?
+            <a href="#" onclick="createAccount(event)">
+                Create an account
+            </a>
+
+        </div>
+
+
+        <div class="case-number">
+            ACCESS LEVEL: CONFIDENTIAL
+        </div>
+
+    </div>
+
+
+    <script>
+
+        /* =====================================
+           LOGIN
+        ===================================== */
+
+        const loginForm = document.getElementById("loginForm");
+
+        const emailInput = document.getElementById("email");
+
+        const passwordInput = document.getElementById("password");
+
+        const errorMessage = document.getElementById("errorMessage");
+
+        const successMessage = document.getElementById("successMessage");
+
+
+        loginForm.addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const email = emailInput.value.trim();
+
+            const password = passwordInput.value.trim();
+
+
+            /* Hide previous messages */
+
+            errorMessage.style.display = "none";
+
+            successMessage.style.display = "none";
+
+
+            /* Empty fields */
+
+            if (email === "" || password === "") {
+
+                errorMessage.textContent =
+                    "Please enter your email and password.";
+
+                errorMessage.style.display = "block";
+
+                return;
+            }
+
+
+            /* Basic email validation */
+
+            const emailPattern =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+            if (!emailPattern.test(email)) {
+
+                errorMessage.textContent =
+                    "Please enter a valid email address.";
+
+                errorMessage.style.display = "block";
+
+                return;
+            }
+
+
+            /* 
+               DEMO LOGIN
+
+               Change these credentials if you want.
+            */
+
+            const correctEmail = "detective@gmail.com";
+
+            const correctPassword = "123456";
+
+
+            if (
+                email === correctEmail &&
+                password === correctPassword
+            ) {
+
+                /* Successful login */
+
+                successMessage.style.display = "block";
+
+
+                /*
+                   Save login status.
+
+                   This allows index.html to know
+                   that the user has logged in.
+                */
+
+                localStorage.setItem(
+                    "isLoggedIn",
+                    "true"
+                );
+
+                localStorage.setItem(
+                    "detectiveEmail",
+                    email
+                );
+
+
+                /*
+                   Small delay so the success
+                   message can be seen.
+                */
+
+                setTimeout(function() {
+
+                    window.location.href = "index.html";
+
+                }, 800);
+
+
+            } else {
+
+                errorMessage.textContent =
+                    "Invalid Detective ID or password.";
+
+                errorMessage.style.display = "block";
+
+            }
+
+        });
+
+
+        /* =====================================
+           SHOW / HIDE PASSWORD
+        ===================================== */
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+
+        togglePassword.addEventListener("click", function() {
+
+            if (passwordInput.type === "password") {
+
+                passwordInput.type = "text";
+
+                togglePassword.textContent = "HIDE";
+
+            } else {
+
+                passwordInput.type = "password";
+
+                togglePassword.textContent = "SHOW";
+
+            }
+
+        });
+
+
+        /* =====================================
+           FORGOT PASSWORD
+        ===================================== */
+
+        function forgotPassword(event) {
+
+            event.preventDefault();
+
+            alert(
+                "Password recovery will be available soon."
+            );
+
+        }
+
+
+        /* =====================================
+           CREATE ACCOUNT
+        ===================================== */
+
+        function createAccount(event) {
+
+            event.preventDefault();
+
+            alert(
+                "Account registration will be available soon."
+            );
+
+        }
+
+    </script>
+
+</body>
+</html>

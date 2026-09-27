@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Evidence | The Glass House</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&family=Libre+Baskerville:ital@0;1&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* ==========================================
+           GLOBAL
+        ========================================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #ffffff;
+            color: #25263a;
+            font-family: "Inter", sans-serif;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+        /* ==========================================
+           TOP HEADER
+        ========================================== */
+
+        .glass-header {
+            height: 68px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 25px;
+            border-top: 3px solid #29232b;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .glass-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-family: "Cormorant Garamond", serif;
+            font-size: 25px;
+            font-weight: 700;
+            color: #24243a;
+        }
+
+        .glass-title span {
+            font-size: 22px;
+        }
+
+        .close-button {
+            font-size: 32px;
+            font-weight: 300;
+            color: #4a4a58;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+
+        /* ==========================================
+           CASE NAVIGATION
+        ========================================== */
+
+        .case-navigation {
+            height: 72px;
+            background: #f8f8f9;
+            border-bottom: 2px solid #e5e5e5;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 34px;
+
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .case-navigation a {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            color: #4f4f5e;
+            font-size: 15px;
+            font-weight: 600;
+
+            padding: 12px 4px;
+        }
+
+        .case-navigation a:hover {
+            color: #a83258;
+        }
+
+        .case-navigation .active {
+            color: #b63160;
+
+            border: 1px solid #e4a1b9;
+            border-radius: 30px;
+
+            padding: 12px 20px;
+
+            background: #fff5f8;
+        }
+
+        .check {
+            color: #5c914c;
+            font-size: 14px;
+        }
+
+
+        /* ==========================================
+           MAIN CONTAINER
+        ========================================== */
+
+        .evidence-container {
+            width: min(900px, 92%);
+            margin: 40px auto 80px;
+        }
+
+        .page-heading {
+            background: #eef5f7;
+            padding: 8px 5px 18px;
+
+            font-family: "Cormorant Garamond", serif;
+            font-size: 34px;
+            font-weight: 700;
+            color: #26314b;
+        }
+
+        .page-heading span {
+            font-size: 32px;
+        }
+
+
+        /* ==========================================
+           ALL EVIDENCE LIST
+        ========================================== */
+
+        #allEvidence {
+            margin-top: 0;
+            background: #eef5f7;
+            padding-bottom: 25px;
+        }
+
+        .evidence-card {
+            min-height: 125px;
+
+            margin: 0 0 14px;
+
+            padding: 25px 35px;
+
+            background: linear-gradient(
+                90deg,
+                #ffffff,
+                #fbfdfe
+            );
+
+            border: 1px solid #c8e8f1;
+            border-radius: 22px;
+
+            display: flex;
+            align-items: center;
+            gap: 25px;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .evidence-card:hover {
+            transform: translateY(-2px);
+
+            border-color: #a8dbe8;
+
+            box-shadow:
+                0 8px 25px rgba(53, 96, 110, 0.10);
+        }
+
+
+        /* ==========================================
+           EVIDENCE ICON
+        ========================================== */
+
+        .evidence-icon {
+            width: 68px;
+            height: 68px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #edf8fc;
+
+            border: 1px solid #c7e8f1;
+            border-radius: 10px;
+
+            font-size: 34px;
+        }
+
+
+        /* ==========================================
+           EVIDENCE TEXT
+        ========================================== */
+
+        .evidence-info {
+            flex: 1;
+        }
+
+        .evidence-info h2 {
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: 25px;
+            font-weight: 700;
+
+            color: #25253b;
+
+            margin-bottom: 5px;
+        }
+
+        .evidence-info p {
+            color: #4b9ab0;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .evidence-arrow {
+            font-size: 25px;
+            color: #737987;
+            padding-left: 15px;
+        }
+
+
+        /* ==========================================
+           SINGLE EVIDENCE VIEW
+        ========================================== */
+
+        #singleEvidence {
+            display: none;
+
+            background: #eef5f7;
+
+            padding: 0 0 35px;
+        }
+
+
+        /* ==========================================
+           BACK BUTTON
+        ========================================== */
+
+        .back-evidence {
+            display: inline-block;
+
+            margin: 0 0 28px;
+
+            padding: 11px 18px;
+
+            border: 1px solid #c9cbd3;
+            border-radius: 9px;
+
+            background: #eeeeF4;
+
+            color: #4c5267;
+
+            font-family: "Inter", sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .back-evidence:hover {
+            background: #e4e5eb;
+        }
+
+
+        /* ==========================================
+           EVIDENCE DOCUMENT
+        ========================================== */
+
+        .full-evidence-card {
+            display: none;
+
+            background: #ffffff;
+
+            border: 1px solid #c9e8f0;
+
+            padding: 55px 58px;
+
+            box-shadow:
+                0 8px 25px rgba(30, 60, 70, 0.04);
+        }
+
+        .full-evidence-card:first-of-type {
+            display: none;
+        }
+
+
+        /* ==========================================
+           DOCUMENT LABEL
+        ========================================== */
+
+        .evidence-stamp {
+            display: inline-block;
+
+            border: 1px solid #b8dce5;
+
+            padding: 7px 15px;
+
+            color: #65a0b2;
+
+            font-family: "Inter", sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+
+            letter-spacing: 4px;
+
+            margin-bottom: 12px;
+        }
+
+        .evidence-document-title {
+            display: inline-block;
+
+            background: #e8f5f8;
+
+            padding: 7px 15px;
+
+            color: #35758a;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            letter-spacing: 3px;
+
+            margin-bottom: 40px;
+        }
+
+
+        /* ==========================================
+           DOCUMENT TITLE
+        ========================================== */
+
+        .full-evidence-card h1 {
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: 34px;
+            line-height: 1.15;
+
+            color: #24243a;
+
+            margin-bottom: 10px;
+        }
+
+        .evidence-subtitle {
+            color: #5898aa;
+
+            font-size: 15px;
+
+            margin-bottom: 35px;
+        }
+
+
+        /* ==========================================
+           EVIDENCE DETAILS
+        ========================================== */
+
+        .evidence-detail {
+            display: grid;
+            grid-template-columns: 175px 1fr;
+
+            gap: 25px;
+
+            padding: 25px 0;
+
+            border-bottom: 1px solid #e1eef1;
+        }
+
+        .evidence-detail:last-child {
+            border-bottom: none;
+        }
+
+        .evidence-detail h3 {
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: 17px;
+
+            color: #4b8da0;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+        .evidence-detail p {
+            font-size: 16px;
+
+            line-height: 1.8;
+
+            color: #303342;
+        }
+
+
+        /* ==========================================
+           IMPORTANT CLUE
+        ========================================== */
+
+        .important-clue {
+            margin-top: 30px;
+
+            padding: 25px;
+
+            background: #fff7fa;
+
+            border-left: 4px solid #c75b7e;
+
+            border-radius: 4px;
+        }
+
+        .important-clue strong {
+            display: block;
+
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: 20px;
+
+            color: #9e3157;
+
+            margin-bottom: 8px;
+        }
+
+        .important-clue p {
+            font-size: 15px;
+
+            line-height: 1.7;
+
+            color: #4c3b43;
+        }
+
+
+        /* ==========================================
+           BOTTOM ACTION
+        ========================================== */
+
+        .major-action {
+            text-align: center;
+
+            margin-top: 35px;
+        }
+
+        .investigate-button {
+            display: inline-block;
+
+            padding: 15px 28px;
+
+            border-radius: 30px;
+
+            background: #fff3f7;
+
+            border: 1px solid #dda0b7;
+
+            color: #ae315d;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            transition: 0.2s ease;
+        }
+
+        .investigate-button:hover {
+            background: #fce5ed;
+        }
+
+
+        /* ==========================================
+           PREVIOUS / NEXT
+        ========================================== */
+
+        .page-navigation {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 18px;
+
+            margin-top: 35px;
+        }
+
+        .page-nav-card {
+            padding: 20px;
+
+            background: #ffffff;
+
+            border: 1px solid #d9e6ea;
+
+            border-radius: 14px;
+
+            transition: 0.2s ease;
+        }
+
+        .page-nav-card:hover {
+            border-color: #c999ab;
+
+            transform: translateY(-2px);
+        }
+
+        .page-nav-card.next {
+            text-align: right;
+        }
+
+        .nav-direction {
+            display: block;
+
+            color: #7c8492;
+
+            font-size: 12px;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 5px;
+        }
+
+        .page-nav-card strong {
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: 21px;
+
+            color: #29293d;
+        }
+
+
+        /* ==========================================
+           MOBILE
+        ========================================== */
+
+        @media (max-width: 700px) {
+
+            .case-navigation {
+                justify-content: flex-start;
+                gap: 18px;
+                padding: 0 15px;
+            }
+
+            .evidence-container {
+                width: 94%;
+                margin-top: 25px;
+            }
+
+            .page-heading {
+                font-size: 29px;
+            }
+
+            .evidence-card {
+                padding: 20px;
+
+                gap: 15px;
+            }
+
+            .evidence-icon {
+                width: 55px;
+                height: 55px;
+                font-size: 27px;
+            }
+
+            .evidence-info h2 {
+                font-size: 21px;
+            }
+
+            .evidence-info p {
+                font-size: 13px;
+            }
+
+            .evidence-arrow {
+                font-size: 20px;
+            }
+
+            .full-evidence-card {
+                padding: 35px 25px;
+            }
+
+            .full-evidence-card h1 {
+                font-size: 29px;
+            }
+
+            .evidence-detail {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .page-navigation {
+                grid-template-columns: 1fr;
+            }
+
+            .page-nav-card.next {
+                text-align: left;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         HEADER
+    ========================================== -->
+
+    <header class="glass-header">
+
+        <div class="glass-title">
+            <span>🏛️</span>
+            The Glass House
+        </div>
+
+        <div class="close-button" onclick="closeCase()">
+            ×
+        </div>
+
+    </header>
+
+
+
+    <!-- ==========================================
+         CASE NAVIGATION
+    ========================================== -->
+
+    <nav class="case-navigation">
+
+        <a href="case-001.html">
+            📋 Case Dossier
+            <span class="check">✓</span>
+        </a>
+
+        <a href="suspects.html">
+            👥 Suspects
+            <span class="check">✓</span>
+        </a>
+
+        <a href="story.html">
+            📖 The Story
+            <span class="check">✓</span>
+        </a>
+
+        <a href="crime-scene.html">
+            📸 Crime Scene
+            <span class="check">✓</span>
+        </a>
+
+        <a href="statements.html">
+            🗣️ Statements
+        </a>
+
+        <a href="evidence.html" class="active">
+            🔎 Evidence
+        </a>
+
+        <a href="secret-notes.html">
+            📝 Secret Notes
+            <span class="check">✓</span>
+        </a>
+
+        <a href="interrogation.html">
+            ❓ Interrogation
+            <span class="check">✓</span>
+        </a>
+
+        <a href="solution.html">
+            ⚖️ Solution
+        </a>
+
+    </nav>
+
+
+
+    <!-- ==========================================
+         MAIN
+    ========================================== -->
+
+    <main class="evidence-container">
+
+
+        <!-- ======================================
+             ALL EVIDENCE
+        ====================================== -->
+
+        <div id="allEvidence">
+
+            <div class="page-heading">
+                🔎 Evidence Files
+            </div>
+
+
+            <!-- EVIDENCE 1 -->
+
+            <div class="evidence-card"
+                 onclick="showEvidence('cabinet')">
+
+                <div class="evidence-icon">
+                    🗄️
+                </div>
+
+                <div class="evidence-info">
+
+                    <h2>
+                        The Display Cabinet
+                    </h2>
+
+                    <p>
+                        The cabinet containing the necklace shows no visible signs of forced entry.
+                    </p>
+
+                </div>
+
+                <div class="evidence-arrow">
+                    →
+                </div>
+
+            </div>
+
+
+
+            <!-- EVIDENCE 2 -->
+
+            <div class="evidence-card"
+                 onclick="showEvidence('camera')">
+
+                <div class="evidence-icon">
+                    📹
+                </div>
+
+                <div class="evidence-info">
+
+                    <h2>
+                        Security Camera
+                    </h2>
+
+                    <p>
+                        The hallway camera stopped recording during the critical period.
+                    </p>
+
+                </div>
+
+                <div class="evidence-arrow">
+                    →
+                </div>
+
+            </div>
+
+
+
+            <!-- EVIDENCE 3 -->
+
+            <div class="evidence-card"
+                 onclick="showEvidence('footprint')">
+
+                <div class="evidence-icon">
+                    👞
+                </div>
+
+                <div class="evidence-info">
+
+                    <h2>
+                        Muddy Footprint
+                    </h2>
+
+                    <p>
+                        A muddy shoe print was discovered near the study window.
+                    </p>
+
+                </div>
+
+                <div class="evidence-arrow">
+                    →
+                </div>
+
+            </div>
+
+
+
+            <!-- EVIDENCE 4 -->
+
+            <div class="evidence-card"
+                 onclick="showEvidence('window')">
+
+                <div class="evidence-icon">
+                    🪟
+                </div>
+
+                <div class="evidence-info">
+
+                    <h2>
+                        The Study Window
+                    </h2>
+
+                    <p>
+                        The window was open, but the surrounding area showed little evidence of entry.
+                    </p>
+
+                </div>
+
+                <div class="evidence-arrow">
+                    →
+                </div>
+
+            </div>
+
+
+
+            <!-- EVIDENCE 5 -->
+
+            <div class="evidence-card"
+                 onclick="showEvidence('phone')">
+
+                <div class="evidence-icon">
+                    📱
+                </div>
+
+                <div class="evidence-info">
+
+                    <h2>
+                        Daniel's Phone Records
+                    </h2>
+
+                    <p>
+                        Phone records reveal an important gap in Daniel's claimed alibi.
+                    </p>
+
+                </div>
+
+                <div class="evidence-arrow">
+                    →
+                </div>
+
+            </div>
+
+
+
+            <!-- EVIDENCE 6 -->
+
+            <div class="evidence-card"
+                 onclick="showEvidence('dining')">
+
+                <div class="evidence-icon">
+                    🍷
+                </div>
+
+                <div class="evidence-info">
+
+                    <h2>
+                        The Dining Table
+                    </h2>
+
+                    <p>
+                        Four partially finished wine glasses suggest the guests were not seated continuously.
+                    </p>
+
+                </div>
+
+                <div class="evidence-arrow">
+                    →
+                </div>
+
+            </div>
+
+
+
+            <!-- EVIDENCE 7 -->
+
+            <div class="evidence-card"
+                 onclick="showEvidence('kitchen')">
+
+                <div class="evidence-icon">
+                    🍰
+                </div>
+
+                <div class="evidence-info">
+
+                    <h2>
+                        The Kitchen
+                    </h2>
+
+                    <p>
+                        Dessert preparation provides another possible route through the house.
+                    </p>
+
+                </div>
+
+                <div class="evidence-arrow">
+                    →
+                </div>
+
+            </div>
+
+
+
+            <!-- EVIDENCE 8 -->
+
+            <div class="evidence-card"
+                 onclick="showEvidence('sparekey')">
+
+                <div class="evidence-icon">
+                    🔑
+                </div>
+
+                <div class="evidence-info">
+
+                    <h2>
+                        The Spare Key
+                    </h2>
+
+                    <p>
+                        Eleanor's spare key remained exactly where she said she had left it.
+                    </p>
+
+                </div>
+
+                <div class="evidence-arrow">
+                    →
+                </div>
+
+            </div>
+
+
+
+            <!-- EVIDENCE 9 -->
+
+            <div class="evidence-card"
+                 onclick="showEvidence('camera-system')">
+
+                <div class="evidence-icon">
+                    ⚙️
+                </div>
+
+                <div class="evidence-info">
+
+                    <h2>
+                        Camera System Knowledge
+                    </h2>
+
+                    <p>
+                        The camera interruption may not have been a random technical failure.
+                    </p>
+
+                </div>
+
+                <div class="evidence-arrow">
+                    →
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ======================================
+             SINGLE EVIDENCE VIEW
+        ====================================== -->
+
+        <div id="singleEvidence">
+
+            <button
+                type="button"
+                class="back-evidence"
+                onclick="backToEvidence()">
+
+                ← Back to All Evidence
+
+            </button>
+
+
+
+            <!-- ==================================
+                 CABINET
+            ================================== -->
+
+            <article
+                id="cabinetEvidence"
+                class="full-evidence-card">
+
+                <div class="evidence-stamp">
+                    EVIDENCE
+                </div>
+
+                <div class="evidence-document-title">
+                    DISPLAY CABINET EXAMINATION
+                </div>
+
+                <h1>
+                    The Display Cabinet
+                </h1>
+
+                <p class="evidence-subtitle">
+                    Examination of the cabinet that contained the Ashford Diamond Necklace.
+                </p>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Condition
+                    </h3>
+
+                    <p>
+                        The glass cabinet is intact. There are no cracks, scratches or signs that the lock was forced.
+                    </p>
+
+                </div>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Lock
+                    </h3>
+
+                    <p>
+                        The locking mechanism appears normal from the outside. However, examination of the latch reveals that it can appear secured even when the locking mechanism has not fully engaged.
+                    </p>
+
+                </div>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Significance
+                    </h3>
+
+                    <p>
+                        Whoever removed the necklace may not have needed to break into the cabinet at all. Someone familiar with the mechanism could open it without leaving obvious damage.
+                    </p>
+
+                </div>
+
+
+                <div class="important-clue">
+
+                    <strong>
+                        Investigator's Note
+                    </strong>
+
+                    <p>
+                        A locked cabinet does not necessarily mean a properly secured cabinet. Look carefully at what the physical evidence does — and does not — show.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ==================================
+                 CAMERA
+            ================================== -->
+
+            <article
+                id="cameraEvidence"
+                class="full-evidence-card">
+
+                <div class="evidence-stamp">
+                    EVIDENCE
+                </div>
+
+                <div class="evidence-document-title">
+                    SECURITY SYSTEM REPORT
+                </div>
+
+                <h1>
+                    Security Camera
+                </h1>
+
+                <p class="evidence-subtitle">
+                    Hallway security recording covering the study entrance.
+                </p>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Recording
+                    </h3>
+
+                    <p>
+                        The hallway camera was operating normally before the incident. At approximately 8:25 PM, the signal disappeared.
+                    </p>
+
+                </div>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Duration
+                    </h3>
+
+                    <p>
+                        The camera remained offline until approximately 8:40 PM, creating a fifteen-minute blind spot during the investigation window.
+                    </p>
+
+                </div>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Question
+                    </h3>
+
+                    <p>
+                        Was the camera failure simply a technical problem, or did someone deliberately create an opportunity to move around unseen?
+                    </p>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ==================================
+                 FOOTPRINT
+            ================================== -->
+
+            <article
+                id="footprintEvidence"
+                class="full-evidence-card">
+
+                <div class="evidence-stamp">
+                    EVIDENCE
+                </div>
+
+                <div class="evidence-document-title">
+                    FOOTWEAR EXAMINATION
+                </div>
+
+                <h1>
+                    Muddy Footprint
+                </h1>
+
+                <p class="evidence-subtitle">
+                    A partial shoe impression discovered near the study window.
+                </p>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Print
+                    </h3>
+
+                    <p>
+                        A muddy footprint was found near the study window. The impression is consistent with a formal leather shoe approximately US size 10.
+                    </p>
+
+                </div>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Marcus
+                    </h3>
+
+                    <p>
+                        Marcus Reed wears approximately size 10 shoes and admitted that he went outside around 8:30 PM while the ground was wet.
+                    </p>
+
+                </div>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Problem
+                    </h3>
+
+                    <p>
+                        The window sill itself contains no mud, and the flowerbed outside is undisturbed. The footprint may therefore not prove that anyone entered through the window.
+                    </p>
+
+                </div>
+
+
+                <div class="important-clue">
+
+                    <strong>
+                        Investigator's Note
+                    </strong>
+
+                    <p>
+                        The footprint makes the window theory tempting. But evidence should explain the entire scene, not just one suspicious detail.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ==================================
+                 WINDOW
+            ================================== -->
+
+            <article
+                id="windowEvidence"
+                class="full-evidence-card">
+
+                <div class="evidence-stamp">
+                    EVIDENCE
+                </div>
+
+                <div class="evidence-document-title">
+                    STUDY WINDOW EXAMINATION
+                </div>
+
+                <h1>
+                    The Study Window
+                </h1>
+
+                <p class="evidence-subtitle">
+                    Examination of the supposed point of entry.
+                </p>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Condition
+                    </h3>
+
+                    <p>
+                        The study window was found open after the necklace disappeared.
+                    </p>
+
+                </div>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Exterior
+                    </h3>
+
+                    <p>
+                        There are no obvious scratches, fingerprints or damaged surfaces around the window.
+                    </p>
+
+                </div>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Ground
+                    </h3>
+
+                    <p>
+                        The flowerbed beneath the window remains undisturbed. There is no clear trail showing that someone climbed through the window.
+                    </p>
+
+                </div>
+
+
+                <div class="important-clue">
+
+                    <strong>
+                        Investigator's Note
+                    </strong>
+
+                    <p>
+                        An open window can tell a story — but it can also be part of a story someone wants investigators to believe.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ==================================
+                 PHONE
+            ================================== -->
+
+            <article
+                id="phoneEvidence"
+                class="full-evidence-card">
+
+                <div class="evidence-stamp">
+                    EVIDENCE
+                </div>
+
+                <div class="evidence-document-title">
+                    TELEPHONE RECORDS
+                </div>
+
+                <h1>
+                    Daniel's Phone Records
+                </h1>
+
+                <p class="evidence-subtitle">
+                    Call history examined against Daniel's claimed whereabouts.
+                </p>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        His Claim
+                    </h3>
+
+                    <p>
+                        Daniel said he went upstairs around 8:15 PM because he had an important phone call and remained upstairs until approximately 8:40 PM.
+                    </p>
+
+                </div>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Records
+                    </h3>
+
+                    <p>
+                        The phone records show an actual call beginning at approximately 8:37 PM and ending at 8:44 PM.
+                    </p>
+
+                </div>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Gap
+                    </h3>
+
+                    <p>
+                        The recorded call does not cover the period from approximately 8:20 PM to 8:37 PM — the first seventeen minutes of the disappearance window.
+                    </p>
+
+                </div>
+
+
+                <div class="important-clue">
+
+                    <strong>
+                        Investigator's Note
+                    </strong>
+
+                    <p>
+                        The phone call is real. The question is whether it proves where Daniel was before the call began.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ==================================
+                 DINING TABLE
+            ================================== -->
+
+            <article
+                id="diningEvidence"
+                class="full-evidence-card">
+
+                <div class="evidence-stamp">
+                    EVIDENCE
+                </div>
+
+                <div class="evidence-document-title">
+                    DINING ROOM EXAMINATION
+                </div>
+
+                <h1>
+                    The Dining Table
+                </h1>
+
+                <p class="evidence-subtitle">
+                    Examination of the table and glasses after the necklace disappeared.
+                </p>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Glasses
+                    </h3>
+
+                    <p>
+                        Four wine glasses were found on the dining table, several of them still partially full.
+                    </p>
+
+                </div>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Timeline
+                    </h3>
+
+                    <p>
+                        The glasses suggest that the guests were not continuously seated at the table throughout the critical period.
+                    </p>
+
+                </div>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Significance
+                    </h3>
+
+                    <p>
+                        Statements claiming that everyone remained together at dinner should therefore be treated carefully.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ==================================
+                 KITCHEN
+            ================================== -->
+
+            <article
+                id="kitchenEvidence"
+                class="full-evidence-card">
+
+                <div class="evidence-stamp">
+                    EVIDENCE
+                </div>
+
+                <div class="evidence-document-title">
+                    KITCHEN EXAMINATION
+                </div>
+
+                <h1>
+                    The Kitchen
+                </h1>
+
+                <p class="evidence-subtitle">
+                    Examination of Thomas Blake's claimed location.
+                </p>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Dessert
+                    </h3>
+
+                    <p>
+                        Dessert preparation was underway in the kitchen, with an unfinished cake and an oven still running.
+                    </p>
+
+                </div>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Access
+                    </h3>
+
+                    <p>
+                        The kitchen has a back entrance that could provide another route through the house.
+                    </p>
+
+                </div>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Timing
+                    </h3>
+
+                    <p>
+                        The dessert did not require constant supervision, meaning Thomas's statement that he could not have left the kitchen cannot be confirmed by the food alone.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ==================================
+                 SPARE KEY
+            ================================== -->
+
+            <article
+                id="sparekeyEvidence"
+                class="full-evidence-card">
+
+                <div class="evidence-stamp">
+                    EVIDENCE
+                </div>
+
+                <div class="evidence-document-title">
+                    KEY EXAMINATION
+                </div>
+
+                <h1>
+                    The Spare Key
+                </h1>
+
+                <p class="evidence-subtitle">
+                    Eleanor's spare key to the study cabinet.
+                </p>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Location
+                    </h3>
+
+                    <p>
+                        The spare key was found inside the drawer in Eleanor's bedroom where she normally kept it.
+                    </p>
+
+                </div>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Condition
+                    </h3>
+
+                    <p>
+                        The key appears to have remained in the drawer throughout the evening.
+                    </p>
+
+                </div>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Significance
+                    </h3>
+
+                    <p>
+                        The thief apparently did not need to steal the spare key in order to access the cabinet.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ==================================
+                 CAMERA SYSTEM KNOWLEDGE
+            ================================== -->
+
+            <article
+                id="camera-systemEvidence"
+                class="full-evidence-card">
+
+                <div class="evidence-stamp">
+                    EVIDENCE
+                </div>
+
+                <div class="evidence-document-title">
+                    SECURITY SYSTEM ANALYSIS
+                </div>
+
+                <h1>
+                    Camera System Knowledge
+                </h1>
+
+                <p class="evidence-subtitle">
+                    What the camera failure tells us about the person responsible.
+                </p>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Blind Spot
+                    </h3>
+
+                    <p>
+                        The hallway camera stopped recording precisely during the period in which the necklace disappeared.
+                    </p>
+
+                </div>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Familiarity
+                    </h3>
+
+                    <p>
+                        Someone deliberately interfering with the system would need to know where the relevant equipment was and how to interrupt it.
+                    </p>
+
+                </div>
+
+
+                <div class="evidence-detail">
+
+                    <h3>
+                        Investigation
+                    </h3>
+
+                    <p>
+                        This makes knowledge of the manor and its systems potentially more important than simply being near the study.
+                    </p>
+
+                </div>
+
+
+                <div class="important-clue">
+
+                    <strong>
+                        Investigator's Note
+                    </strong>
+
+                    <p>
+                        Ask yourself: who knew the house well enough to move through it without attracting attention?
+                    </p>
+
+                </div>
+
+            </article>
+
+        </div>
+
+
+
+        <!-- ======================================
+             BOTTOM NAVIGATION
+        ====================================== -->
+
+        <div class="major-action">
+
+            <a href="secret-notes.html"
+               class="investigate-button">
+
+                EXAMINE THE SECRET NOTES →
+
+            </a>
+
+        </div>
+
+
+        <div class="page-navigation">
+
+            <a href="statements.html"
+               class="page-nav-card">
+
+                <span class="nav-direction">
+                    ← &nbsp; PREVIOUS
+                </span>
+
+                <strong>
+                    Statements
+                </strong>
+
+            </a>
+
+
+            <a href="secret-notes.html"
+               class="page-nav-card next">
+
+                <span class="nav-direction">
+                    NEXT &nbsp; →
+                </span>
+
+                <strong>
+                    Secret Notes
+                </strong>
+
+            </a>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- ==========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <script>
+
+        function showEvidence(evidence) {
+
+            /* Hide the evidence list */
+            document.getElementById("allEvidence").style.display = "none";
+
+            /* Show the single evidence area */
+            document.getElementById("singleEvidence").style.display = "block";
+
+
+            /* Hide every evidence document */
+            document
+                .querySelectorAll(".full-evidence-card")
+                .forEach(function(card) {
+
+                    card.style.display = "none";
+
+                });
+
+
+            /* Show selected evidence */
+            document
+                .getElementById(evidence + "Evidence")
+                .style.display = "block";
+
+
+            /* Scroll to top */
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+
+
+        function backToEvidence() {
+
+            /* Hide single evidence */
+            document.getElementById("singleEvidence").style.display = "none";
+
+
+            /* Show all evidence */
+            document.getElementById("allEvidence").style.display = "block";
+
+
+            /* Scroll to top */
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+
+
+        function closeCase() {
+
+            window.location.href = "cases.html";
+
+        }
+
+    </script>
+
+</body>
+</html>
